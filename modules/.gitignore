@@ -1,4 +1,6 @@
 # Ignore everything in this directory
 *
+!network_availability/
+!network_availability/**
 # Except this file
 !.gitignore

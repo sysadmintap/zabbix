@@ -1,0 +1,22 @@
+{
+    "manifest_version": 2.0,
+    "id": "network-availability",
+    "name": "Network Availability",
+    "version": "1.0",
+    "namespace": "NetworkAvailability",
+    "author": "CMTA",
+    "description": "Device availability and downtime report.",
+    "actions": {
+        "network.availability": {
+            "class": "Report",
+            "view": "network.availability.view",
+            "layout": "layout.htmlpage"
+        },
+        "network.availability.csv": {
+            "class": "ExportCsv"
+        },
+        "network.availability.pdf": {
+            "class": "ExportPdf"
+        }
+    }
+}
