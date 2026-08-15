@@ -1,15 +1,31 @@
 services:
+  postgres-init:
+    image: postgres:16-alpine
+    container_name: zabbix-postgres-init
+    user: "0:0"
+    volumes:
+      - /opt/zabbix/postgres/data:/var/lib/postgresql/data
+    command:
+      - sh
+      - -c
+      - |
+        mkdir -p /var/lib/postgresql/data
+        chown -R 999:999 /var/lib/postgresql/data
+        chmod 700 /var/lib/postgresql/data
 
   postgres:
     image: postgres:16-alpine
     container_name: zabbix-postgres
     restart: unless-stopped
+    depends_on:
+      postgres-init:
+        condition: service_completed_successfully
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
     volumes:
-      - /home/cmta/zabbix-docker/postgres:/var/lib/postgresql/data
+      - /opt/zabbix/postgres/data:/var/lib/postgresql/data
     networks:
       - zabbix-net
 
